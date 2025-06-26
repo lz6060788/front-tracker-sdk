@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端埋点</title>
+  <script type="module">
+  import { Tracker, JsErrorPlugin, LoggerLevelType } from './dist/esm/front-tracker-sdk.js'
+  const tracker = Tracker.init({
+    appId: 'appId-xxxxxxxx',
+    apiUrl: 'http://localhost:3000/api/report',
+    sdkVersion: '1.0.0',
+    debug: true,
+    loggerLevel: LoggerLevelType.DEBUG,
+    userId: 'userId',
+    plugins: [
+      new JsErrorPlugin()
+    ]
+  })
+  const reporterBtn = document.querySelector('.btn-50')
+  reporterBtn.addEventListener('click', () => {
+    for (let i = 0; i < 50; i++) {
+      tracker.submit('action', {
+        message: i + ': reporter test '
+      })
+    }
+  })
+  </script>
+</head>
+<body>
+  <button onclick="createJsError()">生成一个js报错</button>
+  <button onclick="createResourceError()">生成一个资源报错</button>
+  <button onclick="createPromiseRejection()">生成一个promise报错</button>
+  <!-- 一个按钮能够帮助提交50个上报信息 -->
+   <button class="btn-50">生成50个上报数据</button>
+</body>
+
+<script>
+function createJsError () {
+  console.log('createJsError')
+  throw new Error('js报错')
+}
+function createResourceError () {
+  console.log('createResourceError')
+  // 在body上加载一张不存在的图片
+  const img = document.createElement('img')
+  img.src = '//notExisted.jpg'
+  document.body.appendChild(img)
+}
+function createPromiseRejection () {
+  console.log('createPromiseRejection')
+  Promise.reject(new Error('promise报错'))
+}
+</script>
+</html>

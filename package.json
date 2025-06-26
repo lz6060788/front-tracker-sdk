@@ -1,0 +1,21 @@
+{
+  "name": "@irises/front-tracker-sdk",
+  "version": "0.0.1",
+  "description": "前端埋点sdk，适配vue",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "author": "irises",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.0.4",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "dependencies": {
+    "error-stack-parser": "^2.1.4"
+  }
+}
