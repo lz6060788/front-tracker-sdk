@@ -94,9 +94,9 @@ export class reporter {
 
   // 启动定时任务，每3秒触发一次刷新操作
   public start() {
-    console.log('start');
     this.stop();
-    setInterval(() => {
+    console.log('start');
+    this.timer = setInterval(() => {
       this.flush();
     }, this.config.timeinterval);
   }
