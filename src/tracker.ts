@@ -11,6 +11,8 @@ export class Tracker {
 
   private plugins: TrackerConfig['plugins'];
 
+  private provideMethods: Map<string, (...args: any[]) => void> = new Map();
+
   private static _instance: Tracker;
   constructor(options: TrackerConfig) {
     this.appId = options.appId;
@@ -36,7 +38,7 @@ export class Tracker {
       Tracker._instance = new Tracker(options);
       return Tracker._instance;
     } catch (error) {
-      console.error('初始化失败', error);
+      console.error('[Tracker] 初始化失败', error);
       return null;
     }
   }}
@@ -56,7 +58,7 @@ export class Tracker {
 
   public submit(type: ReportType, data: Record<string, unknown>) {
     if (this.debug) {
-      console.log(`[${type}]:`, data);
+      console.log(`[Tracker] 数据提交, 类型【${type}】 数据：`, data);
     }
     this.reporter.add({
       type,
@@ -65,6 +67,29 @@ export class Tracker {
     });
   }
 
+  public registerPrivideMethod(methodName: string, method: (...args: any[]) => void) {
+    if (this.provideMethods.has(methodName)) {
+      if (this.debug) {
+        console.warn(`[Tracker] 方法[${methodName}]已被注册`);
+      }
+      return;
+    }
+    if (this.debug) {
+      console.log(`[Tracker] 方法[${methodName}]注册成功`)
+    }
+    this.provideMethods.set(methodName, method);
+  }
+
+  public callMethods(methodName: string, ...args: any[]) {
+    const method = this.provideMethods.get(methodName);
+    if (!method) {
+      if (this.debug) {
+        console.warn(`[Tracker] 方法[${methodName}]不存在`);
+      }
+      return;
+    }
+    method(...args);
+  }
   // public report() {
   // }
 }

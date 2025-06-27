@@ -36,11 +36,11 @@ export interface PromiseRejectionInfo {
 
 export class JsErrorPlugin implements TrackerPlugin {
   public tracker: Tracker | null = null;
-  constructor(tracker: Tracker) {
+  constructor() {
   }
 
   get isDebug () {
-    return this.tracker!.debug;
+    return this.tracker?.debug;
   }
 
   install(tracker: Tracker) {
@@ -48,11 +48,14 @@ export class JsErrorPlugin implements TrackerPlugin {
     window.addEventListener('error', this.handleError.bind(this), true);
     window.addEventListener('unhandledrejection', this.handlePromiseRejection.bind(this));
     if (this.isDebug) {
-      console.log('JsErrorPlugin installed');
+      console.log('[JsErrorPlugin] 已加载：', this);
     }
   }
 
   handleError = (event: ErrorEvent | Event) => {
+    if (this.isDebug) {
+      console.log('[JsErrorPlugin] 错误捕获', event);
+    }
     if ('error' in event && event.error) {
       this.handleJsError(event as ErrorEvent);
     } else if (
@@ -86,8 +89,8 @@ export class JsErrorPlugin implements TrackerPlugin {
       
     } catch (parseError) {
       if (this.isDebug) {
-        console.error('Failed to parse error stack:', parseError);
-        console.error('Original error:', {
+        console.error('[JsErrorPlugin] 无法解析错误堆栈信息:', parseError);
+        console.error('[JsErrorPlugin] 源错误:', {
           type: error.name,
           message: error.message,
           stack: error.stack
@@ -137,7 +140,7 @@ export class JsErrorPlugin implements TrackerPlugin {
           
         } catch (parseError) {
           if (this.isDebug) {
-            console.error('Failed to parse promise rejection:', {
+            console.error('[JsErrorPlugin] 无法解析异步错误:', {
               type: 'unhandledrejection',
               message: String(error),
               stack: error.stack
@@ -146,7 +149,7 @@ export class JsErrorPlugin implements TrackerPlugin {
         }
       } else {
         if (this.isDebug) {
-          console.error('Unhandled Promise Rejection (non-Error):', {
+          console.error('[JsErrorPlugin] 未处理的异步错误，非错误类型:', {
             type: 'unhandledrejection',
             message: String(error),
             value: error

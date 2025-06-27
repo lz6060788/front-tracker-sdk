@@ -100,6 +100,10 @@ export class performancePlugin implements TrackerPlugin {
           element: entry.element?.tagName
         };
       observer.disconnect();
+      
+      if (this.isDebug) {
+        console.log('[PerformancePlugin] FMP:', entry, '监听器已移除');
+      }
     }).observe({ entryTypes: ['element']})
 
     // LCP
@@ -118,7 +122,11 @@ export class performancePlugin implements TrackerPlugin {
           loadTime: entry.loadTime,
           element: entry.element?.tagName
         };
-      observer.disconnect(); // 不需要观察
+      observer.disconnect();
+
+      if (this.isDebug) {
+        console.log('[PerformancePlugin] LCP:', this.metrics.LCP, '监听器已移除');
+      }
     }).observe({ entryTypes: ['largest-contentful-paint'] })
     
 
@@ -150,8 +158,16 @@ export class performancePlugin implements TrackerPlugin {
         this.tracker?.submit('performance', this.metrics);
         this.layoutShiftObserver?.disconnect();
         this.layoutShiftObserver = null;
+
+        if (this.isDebug) {
+          console.log('[PerformancePlugin] 数据上报:', this.metrics, 'layoutShift监听器已移除');
+        }
       }
     }, { once: true });
+
+    if (this.isDebug) {
+      console.log('[PerformancePlugin] 已加载：', this);
+    }
   }
 
   get isDebug () {
@@ -163,6 +179,9 @@ export class performancePlugin implements TrackerPlugin {
    */
   capturePageLoadMetrics() {
     const navigationEntries = performance.getEntriesByType('navigation');
+    if (this.isDebug) {
+      console.log('[PerformancePlugin] 页面加载性能指标:', navigationEntries);
+    }
     if (navigationEntries.length === 0) return;
     
     const navigationEntry = navigationEntries[0] as PerformanceNavigationTiming;
@@ -215,6 +234,9 @@ export class performancePlugin implements TrackerPlugin {
       ttfbTime: resource.responseStart - resource.requestStart,
       downloadTime: resource.responseEnd - resource.responseStart
     }));
+    if (this.isDebug) {
+      console.log('[PerformancePlugin] 资源加载数据:', resources);
+    }
   }
   
   /**
@@ -238,8 +260,8 @@ export class performancePlugin implements TrackerPlugin {
       };
 
     const fcpEntry = performance.getEntriesByName('first-contentful-paint')[0] as ExtendPerformanceEntryType;
-    this.metrics.FP = !!fpEntry.toJSON
-      ? fpEntry.toJSON()
+    this.metrics.FCP = !!fcpEntry.toJSON
+      ? fcpEntry.toJSON()
       : {
         name: fcpEntry.name,
         entryType: fcpEntry.entryType,
@@ -250,6 +272,11 @@ export class performancePlugin implements TrackerPlugin {
         loadTime: fcpEntry.loadTime,
         element: fcpEntry.element?.tagName
       };
+    
+    if (this.isDebug) {
+      console.log('[PerformancePlugin] FP:', fpEntry);
+      console.log('[PerformancePlugin] FCP:', fcpEntry);
+    }
   }
   
   /**
@@ -277,6 +304,9 @@ export class performancePlugin implements TrackerPlugin {
     });
     
     this.longTaskObserver.observe({ type: 'longtask', buffered: true });
+    if (this.isDebug) {
+      console.log('[PerformancePlugin] 长任务监听已开启');
+    }
   }
   
   /**
@@ -307,5 +337,8 @@ export class performancePlugin implements TrackerPlugin {
     });
     
     this.layoutShiftObserver.observe({ type: 'layout-shift', buffered: true });
+    if (this.isDebug) {
+      console.log('[PerformancePlugin] layoutshift监听已开启');
+    }
   }
 }

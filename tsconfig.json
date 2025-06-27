@@ -3,7 +3,7 @@
     /* 基本选项 */
     "target": "ES6",                          // 指定编译后的 JavaScript 目标版本: 'ES3' (默认), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', 'ES2021', 'ESNext'
     "module": "commonjs",                     // 指定模块代码生成方式: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', 'ESNext'
-    "lib": ["ES6", "DOM"],                   // 编译过程中需要引入的库文件声明
+    "lib": ["es2016", "DOM"],                   // 编译过程中需要引入的库文件声明
     "allowJs": true,                          // 允许编译 JavaScript 文件
     "checkJs": true,                          // 在 .js 文件中报告错误
     "jsx": "preserve",                        // 指定 JSX 代码的生成方式: 'preserve', 'react-native', 'react', 'react-jsx', 'react-jsxdev'

@@ -30,7 +30,7 @@ export interface PromiseRejectionInfo {
 }
 export declare class JsErrorPlugin implements TrackerPlugin {
     tracker: Tracker | null;
-    constructor(tracker: Tracker);
+    constructor();
     get isDebug(): boolean | undefined;
     install(tracker: Tracker): void;
     handleError: (event: ErrorEvent | Event) => void;
