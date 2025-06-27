@@ -1,4 +1,4 @@
-import { LoggerLevelType, ReportType, TrackerConfig, TrackerReporter } from './types'
+import { ReportType, TrackerConfig, TrackerReporter } from './types'
 
 
 export class Tracker {
@@ -7,6 +7,8 @@ export class Tracker {
   private sdkVersion: TrackerConfig['sdkVersion'];
   private reporter: TrackerReporter;
   public debug: TrackerConfig['debug'];
+  public ssr: TrackerConfig['ssr'];
+
   private plugins: TrackerConfig['plugins'];
 
   private static _instance: Tracker;
@@ -15,13 +17,14 @@ export class Tracker {
     this.userId = options.userId;
     this.sdkVersion = options.sdkVersion;
     this.debug = options.debug || false;
+    this.ssr = options.ssr || false;
     this.reporter = options.reporter;
     this.reporter.install();
 
     this.plugins = options.plugins || [];
     this.plugins.forEach(plugin => {
       plugin.tracker = this;
-      plugin.install();
+      plugin.install(this);
     });
   }
 
@@ -43,6 +46,11 @@ export class Tracker {
       appId: this.appId,
       userId: this.userId || '',
       sdkVersion: this.sdkVersion,
+      url: !this.ssr ? window.location.href : '',
+      userAgent: !this.ssr ? window.navigator.userAgent : '',
+      timestamp: Date.now(),
+      referrer: !this.ssr ? document.referrer : '',
+      page: !this.ssr ? window.document.title : '',
     };
   };
 

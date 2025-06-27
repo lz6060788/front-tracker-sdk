@@ -6,10 +6,11 @@ export interface TrackerConfig {
   debug?: boolean;
   userId?: string;
   plugins?: Array<TrackerPlugin>;
+  ssr?: boolean;
   reporter: TrackerReporter
 }
 
-export type ReportType = 'jsError' | 'unhandledRejection' | 'resourceError' | 'xhrError' | 'whiteScreen' | 'performance' | 'logger' | 'action'
+export type ReportType = 'jsError' | 'unhandledRejection' | 'resourceError' | 'xhrError' | 'whiteScreen' | 'performance' | 'longtask' | 'logger' | 'action'
 
 export const enum LoggerLevelType {
   DEBUG,

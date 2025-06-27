@@ -5,17 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>前端埋点</title>
   <script type="module">
-  import { Tracker, JsErrorPlugin, LoggerLevelType, DefaultRporter } from './dist/esm/front-tracker-sdk.js'
+  import { Tracker, JsErrorPlugin, LoggerLevelType, Rporter, performancePlugin } from './dist/esm/front-tracker-sdk.js'
   const tracker = Tracker.init({
     appId: 'appId-xxxxxxxx',
     sdkVersion: '1.0.0',
     debug: true,
     userId: 'userId',
-    reporter: new DefaultRporter({
+    reporter: new Rporter({
       apiUrl: 'http://localhost:3000/api/report'
     }),
     plugins: [
-      new JsErrorPlugin()
+      new JsErrorPlugin(),
+      new performancePlugin()
     ]
   })
   const reporterBtn = document.querySelector('.btn-50')
@@ -27,6 +28,7 @@
     }
   })
   </script>
+  <link rel="stylesheet" href="//png.jpg">
 </head>
 <body>
   <button onclick="createJsError()">生成一个js报错</button>

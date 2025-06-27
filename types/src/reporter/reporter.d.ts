@@ -9,7 +9,7 @@ export interface ReporterConfig {
 }
 export type ReporterConfigParams = Partial<Omit<ReporterConfig, 'apiUrl'>> & Required<Pick<ReporterConfig, 'apiUrl'>>;
 export declare const defaultReporterConfig: Omit<ReporterConfig, 'apiUrl'>;
-export declare class DefaultRporter implements TrackerReporter {
+export declare class Rporter implements TrackerReporter {
     private config;
     private queue;
     private timer;

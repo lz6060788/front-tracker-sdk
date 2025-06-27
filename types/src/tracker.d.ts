@@ -5,6 +5,7 @@ export declare class Tracker {
     private sdkVersion;
     private reporter;
     debug: TrackerConfig['debug'];
+    ssr: TrackerConfig['ssr'];
     private plugins;
     private static _instance;
     constructor(options: TrackerConfig);

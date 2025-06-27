@@ -1,4 +1,3 @@
-import { Tracker } from "src/tracker";
 import { ReporterDataType, TrackerReporter } from "../types";
 
 export interface ReporterConfig {
@@ -20,7 +19,7 @@ export const defaultReporterConfig: Omit<ReporterConfig, 'apiUrl'> = {
   abatchLength: 10
 }
 
-export class DefaultRporter implements TrackerReporter {
+export class Rporter implements TrackerReporter {
   private config: ReporterConfig;
   private queue: Array<ReporterDataType> = [];
   private timer: any = null;
