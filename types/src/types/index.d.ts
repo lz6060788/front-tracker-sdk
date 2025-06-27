@@ -1,13 +1,11 @@
-import { TrackerPlugin } from "src/plugins";
+import { Tracker } from "src/tracker";
 export interface TrackerConfig {
     appId: string;
-    apiUrl: string;
     sdkVersion: string;
     debug?: boolean;
-    loggerLevel?: LoggerLevelType;
     userId?: string;
-    reporterConfig?: Partial<ReporterConfig>;
     plugins?: Array<TrackerPlugin>;
+    reporter: TrackerReporter;
 }
 export type ReportType = 'jsError' | 'unhandledRejection' | 'resourceError' | 'xhrError' | 'whiteScreen' | 'performance' | 'logger' | 'action';
 export declare const enum LoggerLevelType {
@@ -16,17 +14,18 @@ export declare const enum LoggerLevelType {
     WARN = 2,
     ERROR = 3
 }
-export interface ReporterConfig {
-    maxQueueLength: number;
-    timeinterval: number;
-    maxRetry: number;
-    retryInterval: number;
-    abatchLength: number;
-}
 export interface ReporterDataType {
     type: ReportType;
     appId: string;
     sdkVersion: string;
     userId: string;
     data: Record<string, unknown>;
+}
+export interface TrackerPlugin {
+    tracker: Tracker;
+    install: () => void;
+}
+export interface TrackerReporter {
+    install(): void;
+    add(data: ReporterDataType): void;
 }

@@ -1,29 +1,22 @@
-import { reporter } from './reporter';
-import { LoggerLevelType, ReportType, TrackerConfig } from './types'
+import { LoggerLevelType, ReportType, TrackerConfig, TrackerReporter } from './types'
 
 
 export class Tracker {
   private appId: TrackerConfig['appId'];
   private userId: TrackerConfig['userId'];
   private sdkVersion: TrackerConfig['sdkVersion'];
-  private reporterConfig: TrackerConfig['reporterConfig'];
-  private reporter: reporter;
-  public apiUrl: TrackerConfig['apiUrl'];
+  private reporter: TrackerReporter;
   public debug: TrackerConfig['debug'];
-  public loggerLevel: TrackerConfig['loggerLevel'];
   private plugins: TrackerConfig['plugins'];
 
   private static _instance: Tracker;
   constructor(options: TrackerConfig) {
     this.appId = options.appId;
     this.userId = options.userId;
-    this.apiUrl = options.apiUrl;
     this.sdkVersion = options.sdkVersion;
     this.debug = options.debug || false;
-    this.loggerLevel = options.loggerLevel || LoggerLevelType.ERROR;
-    this.reporterConfig = options.reporterConfig || {};
-    this.reporter = new reporter(this.reporterConfig, this);
-    this.reporter.start();
+    this.reporter = options.reporter;
+    this.reporter.install();
 
     this.plugins = options.plugins || [];
     this.plugins.forEach(plugin => {
@@ -33,7 +26,6 @@ export class Tracker {
   }
 
   static init(options: TrackerConfig) {{
-    console.log('111')
     try {
       if (Tracker._instance) {
         return Tracker._instance;

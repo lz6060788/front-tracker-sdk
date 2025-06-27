@@ -1,5 +1,5 @@
+import { TrackerPlugin } from "src/types";
 import { Tracker } from "../tracker";
-import type { TrackerPlugin } from './basePlugin';
 export interface StackFrame {
     fileName?: string;
     lineNumber?: number;

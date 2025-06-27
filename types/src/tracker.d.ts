@@ -3,11 +3,8 @@ export declare class Tracker {
     private appId;
     private userId;
     private sdkVersion;
-    private reporterConfig;
     private reporter;
-    apiUrl: TrackerConfig['apiUrl'];
     debug: TrackerConfig['debug'];
-    loggerLevel: TrackerConfig['loggerLevel'];
     private plugins;
     private static _instance;
     constructor(options: TrackerConfig);

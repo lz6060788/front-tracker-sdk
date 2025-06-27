@@ -1,6 +1,6 @@
+import { TrackerPlugin } from "src/types";
 import { Tracker } from "../tracker";
 import ErrorStackParser from 'error-stack-parser'
-import type { TrackerPlugin } from './basePlugin'
 
 export interface StackFrame {
   fileName?: string;

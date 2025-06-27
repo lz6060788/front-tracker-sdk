@@ -1,7 +1,18 @@
 import { Tracker } from "src/tracker";
-import { ReporterConfig, ReporterDataType } from "./types";
+import { ReporterDataType, TrackerReporter } from "../types";
 
-export const defaultReporterConfig: ReporterConfig = {
+export interface ReporterConfig {
+  apiUrl: string;
+  maxQueueLength: number;
+  timeinterval: number;
+  maxRetry: number;
+  retryInterval: number;
+  abatchLength: number;
+}
+
+export type ReporterConfigParams = Partial<Omit<ReporterConfig, 'apiUrl'>> & Required<Pick<ReporterConfig, 'apiUrl'>>
+
+export const defaultReporterConfig: Omit<ReporterConfig, 'apiUrl'> = {
   maxQueueLength: 200,
   timeinterval: 3000,
   maxRetry: 3,
@@ -9,25 +20,26 @@ export const defaultReporterConfig: ReporterConfig = {
   abatchLength: 10
 }
 
-// TODO上报模块存在定时器Bug
-export class reporter {
+export class DefaultRporter implements TrackerReporter {
   private config: ReporterConfig;
   private queue: Array<ReporterDataType> = [];
   private timer: any = null;
   private retryCount: number = 0;
-  private tracker: Tracker;
   private isSending: boolean = false;
   private currentBatch: Array<ReporterDataType> = [];
-  constructor(config: Partial<ReporterConfig>, tracker: Tracker) {
+  constructor(config: ReporterConfigParams) {
     this.config = this._mergeConfig(config)
-    this.tracker = tracker
   }
 
-  private _mergeConfig (config: Partial<ReporterConfig>) {
+  private _mergeConfig (config: ReporterConfigParams) {
     return {
       ...defaultReporterConfig,
       ...config
     }
+  }
+
+  public install() {
+    this.start();
   }
 
   public add(data: ReporterDataType) {
