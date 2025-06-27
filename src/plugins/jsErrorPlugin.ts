@@ -35,16 +35,16 @@ export interface PromiseRejectionInfo {
 }
 
 export class JsErrorPlugin implements TrackerPlugin {
-  public tracker: Tracker;
+  public tracker: Tracker | null = null;
   constructor(tracker: Tracker) {
-    this.tracker = tracker;
   }
 
   get isDebug () {
-    return this.tracker.debug;
+    return this.tracker!.debug;
   }
 
-  install() {
+  install(tracker: Tracker) {
+    this.tracker = tracker;
     window.addEventListener('error', this.handleError.bind(this), true);
     window.addEventListener('unhandledrejection', this.handlePromiseRejection.bind(this));
     if (this.isDebug) {
@@ -82,7 +82,7 @@ export class JsErrorPlugin implements TrackerPlugin {
         }
       };
 
-      this.tracker.submit('jsError', errorInfo);
+      this.tracker!.submit('jsError', errorInfo);
       
     } catch (parseError) {
       if (this.isDebug) {
@@ -108,7 +108,7 @@ export class JsErrorPlugin implements TrackerPlugin {
       outerHTML: target.outerHTML.slice(0, 200),
     };
 
-    this.tracker.submit('resourceError', resourceInfo);
+    this.tracker!.submit('resourceError', resourceInfo);
     
     // event.preventDefault();
   }
@@ -133,7 +133,7 @@ export class JsErrorPlugin implements TrackerPlugin {
             },
           };
   
-          this.tracker.submit('unhandledRejection', errorInfo)
+          this.tracker!.submit('unhandledRejection', errorInfo)
           
         } catch (parseError) {
           if (this.isDebug) {

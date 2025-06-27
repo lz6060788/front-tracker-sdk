@@ -22,8 +22,8 @@ export interface ReporterDataType {
     data: Record<string, unknown>;
 }
 export interface TrackerPlugin {
-    tracker: Tracker;
-    install: () => void;
+    tracker: Tracker | null;
+    install: (tracker: Tracker) => void;
 }
 export interface TrackerReporter {
     install(): void;

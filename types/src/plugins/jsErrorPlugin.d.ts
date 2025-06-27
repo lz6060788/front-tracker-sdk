@@ -29,10 +29,10 @@ export interface PromiseRejectionInfo {
     [key: string]: unknown;
 }
 export declare class JsErrorPlugin implements TrackerPlugin {
-    tracker: Tracker;
+    tracker: Tracker | null;
     constructor(tracker: Tracker);
     get isDebug(): boolean | undefined;
-    install(): void;
+    install(tracker: Tracker): void;
     handleError: (event: ErrorEvent | Event) => void;
     private handleJsError;
     private handleResourceError;
