@@ -73,7 +73,7 @@ export class performancePlugin implements TrackerPlugin {
   private layoutShiftObserver: PerformanceObserver | null = null;
   private config: performancePluginConfig;
   
-  constructor(config: Partial<performancePluginConfig>) {
+  constructor(config: Partial<performancePluginConfig> = {}) {
     this.config = {
       ...defaultPerformancePluginConfig,
       ...config

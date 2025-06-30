@@ -10,7 +10,19 @@ export interface TrackerConfig {
   reporter: TrackerReporter
 }
 
-export type ReportType = 'jsError' | 'unhandledRejection' | 'resourceError' | 'xhrError' | 'whiteScreen' | 'performance' | 'longtask' | 'logger' | 'action'
+export interface ReportTypeExtension {}
+
+export type ReportType =
+  | 'jsError'
+  | 'unhandledRejection'
+  | 'resourceError'
+  | 'xhrError'
+  | 'whiteScreen'
+  | 'performance'
+  | 'longtask'
+  | 'logger'
+  | 'action'
+  | keyof ReportTypeExtension;
 
 export const enum LoggerLevelType {
   DEBUG,
