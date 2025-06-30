@@ -45,7 +45,7 @@ export interface TrackerPlugin {
 }
 
 export interface TrackerReporter {
-  install(): void;
+  install(tracker: Tracker): void;
   add(data: ReporterDataType): void;
 }
 
