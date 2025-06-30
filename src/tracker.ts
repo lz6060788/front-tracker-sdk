@@ -67,7 +67,7 @@ export class Tracker {
     });
   }
 
-  public registerPrivideMethod(methodName: string, method: (...args: any[]) => void) {
+  public registerMethod(methodName: string, method: (...args: any[]) => void) {
     if (this.provideMethods.has(methodName)) {
       if (this.debug) {
         console.warn(`[Tracker] 方法[${methodName}]已被注册`);

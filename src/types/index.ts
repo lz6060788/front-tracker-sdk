@@ -1,4 +1,4 @@
-import { Tracker } from "src/tracker";
+import { Tracker } from "../tracker";
 
 export interface TrackerConfig {
   appId: string;

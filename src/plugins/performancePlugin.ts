@@ -1,6 +1,5 @@
-import { TrackerPlugin } from "src/types";
+import { TrackerPlugin } from "../types";
 import { Tracker } from "../tracker";
-import ErrorStackParser from 'error-stack-parser'
 
 // Type definitions for experimental performance APIs
 export interface TaskAttributionTiming extends PerformanceEntry {

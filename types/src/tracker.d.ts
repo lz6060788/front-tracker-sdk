@@ -13,6 +13,6 @@ export declare class Tracker {
     static init(options: TrackerConfig): Tracker | null;
     private get baseInfo();
     submit(type: ReportType, data: Record<string, unknown>): void;
-    registerPrivideMethod(methodName: string, method: (...args: any[]) => void): void;
+    registerMethod(methodName: string, method: (...args: any[]) => void): void;
     callMethods(methodName: string, ...args: any[]): void;
 }

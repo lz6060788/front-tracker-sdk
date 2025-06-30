@@ -1,4 +1,4 @@
-import { TrackerPlugin } from "src/types";
+import { TrackerPlugin } from "../types";
 import { Tracker } from "../tracker";
 
 export interface WhiteScreenDetectPluginConfig {
@@ -37,7 +37,7 @@ export class WhiteScreenDetectPlugin implements TrackerPlugin {
     this.autoDetect && setTimeout(() => {
       this.handleDetectScreen();
     }, this.delay);
-    this.tracker.registerPrivideMethod('handleDetectScreen', this.handleDetectScreen.bind(this));
+    this.tracker.registerMethod('handleDetectScreen', this.handleDetectScreen.bind(this));
   }
 
   getSamplePoints () {
