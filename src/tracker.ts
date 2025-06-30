@@ -21,7 +21,7 @@ export class Tracker {
     this.debug = options.debug || false;
     this.ssr = options.ssr || false;
     this.reporter = options.reporter;
-    this.reporter.install();
+    this.reporter.install(this);
 
     this.plugins = options.plugins || [];
     this.plugins.forEach(plugin => {
