@@ -4,7 +4,7 @@ import { ReportType, TrackerConfig, TrackerReporter } from './types'
 export class Tracker {
   private appId: TrackerConfig['appId'];
   private userId: TrackerConfig['userId'];
-  private sdkVersion: TrackerConfig['sdkVersion'];
+  private sdkVersion: string;
   private reporter: TrackerReporter;
   public debug: TrackerConfig['debug'];
   public ssr: TrackerConfig['ssr'];
@@ -17,7 +17,7 @@ export class Tracker {
   constructor(options: TrackerConfig) {
     this.appId = options.appId;
     this.userId = options.userId;
-    this.sdkVersion = options.sdkVersion;
+    this.sdkVersion = '1.0.0';
     this.debug = options.debug || false;
     this.ssr = options.ssr || false;
     this.reporter = options.reporter;

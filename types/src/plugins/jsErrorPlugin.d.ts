@@ -1,4 +1,4 @@
-import { TrackerPlugin } from "src/types";
+import { TrackerPlugin } from "../types";
 import { Tracker } from "../tracker";
 export interface StackFrame {
     fileName?: string;

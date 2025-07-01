@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@irises/front-tracker-sdk": ["../dist/src/index.d.ts"]
+    }
+  },
+  "include": ["src/**/*"]
+}

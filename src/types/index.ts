@@ -2,7 +2,6 @@ import { Tracker } from "../tracker";
 
 export interface TrackerConfig {
   appId: string;
-  sdkVersion: string;
   debug?: boolean;
   userId?: string;
   plugins?: Array<TrackerPlugin>;

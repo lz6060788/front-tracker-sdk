@@ -1,4 +1,4 @@
-import { Tracker } from "src/tracker";
+import { Tracker } from "../tracker";
 export interface TrackerConfig {
     appId: string;
     sdkVersion: string;
@@ -8,7 +8,9 @@ export interface TrackerConfig {
     ssr?: boolean;
     reporter: TrackerReporter;
 }
-export type ReportType = 'jsError' | 'unhandledRejection' | 'resourceError' | 'xhrError' | 'whiteScreen' | 'performance' | 'longtask' | 'logger' | 'action';
+export interface ReportTypeExtension {
+}
+export type ReportType = 'jsError' | 'unhandledRejection' | 'resourceError' | 'xhrError' | 'whiteScreen' | 'performance' | 'longtask' | 'logger' | 'action' | keyof ReportTypeExtension;
 export declare const enum LoggerLevelType {
     DEBUG = 0,
     INFO = 1,
@@ -27,6 +29,6 @@ export interface TrackerPlugin {
     install: (tracker: Tracker) => void;
 }
 export interface TrackerReporter {
-    install(): void;
+    install(tracker: Tracker): void;
     add(data: ReporterDataType): void;
 }

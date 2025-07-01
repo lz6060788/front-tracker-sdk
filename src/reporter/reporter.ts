@@ -95,7 +95,7 @@ export class Rporter implements TrackerReporter {
         console.error(`[reporter] 数据发送失败: ${(error as Error).message}`);
       }
       this.stop();
-      
+
       // 如果未达到最大重试次数，则安排重试
       if (this.retryCount < this.config.maxRetry) {
         if (this.isDebug) {

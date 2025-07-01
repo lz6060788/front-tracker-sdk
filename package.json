@@ -1,6 +1,6 @@
 {
   "name": "@irises/front-tracker-sdk",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "前端埋点sdk，适配vue",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,6 +19,19 @@
   "dependencies": {
     "error-stack-parser": "^2.1.4"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "require": "./dist/umd/front-tracker-sdk.js",
+      "import": "./dist/esm/front-tracker-sdk.js"
+    }
+  },
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
   "publishConfig": {
     "access": "public"
   }

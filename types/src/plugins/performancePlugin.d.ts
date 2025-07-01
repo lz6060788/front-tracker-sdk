@@ -1,4 +1,4 @@
-import { TrackerPlugin } from "src/types";
+import { TrackerPlugin } from "../types";
 import { Tracker } from "../tracker";
 export interface TaskAttributionTiming extends PerformanceEntry {
     containerType: string;
@@ -43,7 +43,7 @@ export declare class performancePlugin implements TrackerPlugin {
     private longTaskObserver;
     private layoutShiftObserver;
     private config;
-    constructor(config: Partial<performancePluginConfig>);
+    constructor(config?: Partial<performancePluginConfig>);
     install(tracker: Tracker): void;
     get isDebug(): boolean | undefined;
     capturePageLoadMetrics(): void;
